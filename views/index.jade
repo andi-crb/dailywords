@@ -5,8 +5,9 @@ block content
   .col-md-12
     .jumbotron
       h1 Today's challenge is: 
-      p
-        | Write 3 paragraphs describing a forest from the perspective of an elderly woman who has never visited one before.
+      - each prompt, i in prompts
+        p
+          = prompt.Prompt
       p
         | Sign up now to spin for another challenge, track your progress, and win badges.
       p

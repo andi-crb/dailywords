@@ -22,3 +22,9 @@ background {
   padding: 4%;
   margin: 8%;
 }
+
+.wbackground{
+  background-color: white;
+  background-image: none;
+  margin: 0px;
+}

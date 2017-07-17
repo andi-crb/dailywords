@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var moment = require('moment');
 var mysql = require ('mysql');
+var passport = require('passport')
+var LocalStrategy = require('passport-local').Strategy;
 
 var today = moment().format("YYYY-MM-DD");
 

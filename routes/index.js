@@ -59,6 +59,35 @@ passport.use('local-signup', new LocalStrategy({
 	});
 }));
 
+// Login Strategy
+
+passport.use('local-login', new LocalStrategy({
+        usernameField : 'Email',
+        passwordField : 'Password',
+        passReqToCallback : true 
+    },
+    function(req, Email, Password, done) { // callback with email and password from our form
+
+         connection.query("SELECT * FROM `Users` WHERE `Email` = '" + Email + "'",function(err,rows){
+			if (err)
+                return done(err);
+			 if (!rows.length) {
+                return done(null, false, req.flash('loginMessage', 'No user found.')); 
+            } 
+			
+			// if the user is found but the password is wrong
+            if (!( rows[0].Password == Password))
+                return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); 
+			
+            // all is well, return successful user
+            return done(null, rows[0]);			
+		
+		});
+		
+
+
+    }));
+
 //Registration and Logins
 
 router.get('/signup', function(req, res) {
@@ -75,13 +104,9 @@ router.get('/login', function(req, res) {
   res.render('login', { user : req.user });
 });
 
-router.post('/login',
-  passport.authenticate('local-login'),
+router.post('/login', passport.authenticate('local-login'),
   function(req, res) {
-    console.log(req.user)
-
-    // If this function gets called, authentication was successful.
-    // `req.user` contains the authenticated user.
+    console.log(req.User)
     res.redirect('/');
   })
 
@@ -98,6 +123,14 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Daily Words', prompts: rows });
   });
 })
+
+router.get('/random', function(req, res, next){
+  connection.query('SELECT * FROM Prompts ORDER BY rand() LIMIT 20', function(err, rows){
+    var randomPrompt = rows[0];
+    res.render('index', { title: 'Daily Words', randPrompts: randomPrompt });
+  });
+});
+
 
 router.get('/faqs', function(req, res, next) {
   res.render('faqs', { title: 'Daily Words' });

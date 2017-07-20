@@ -4,24 +4,46 @@ block content
   .row
   .col-md-12
     .jumbotron
-      h1 Today's challenge is:
+      if !randPrompts
+        h1 Today's challenge is:
       if prompt
         - each prompt, i in prompts
           p
             = prompt.Prompt
-      if !prompt
+      if !prompt && !randPrompts
         p
           | Sorry, no prompt today. Go write some words and check back soon.
-      p
-        a(href='/signup') Sign up now to spin for another challenge, track your progress, and win badges.
-      p
-        a.btn.btn-primary.btn-lg 
-          i.fa.fa-check-square-o(aria-hidden='true')
-          |  I completed this challenge!
-        a.btn.btn-primary.btn-lg
-          i.fa.fa-refresh(aria-hidden='true')
-          |  Show me another challenge
-        a.btn.btn-primary.btn-lg
-          i.fa.fa-pencil(aria-hidden='true')
-          |  I wrote something else instead today
-        
+      if randPrompts
+        h1 Your random prompt is:
+        p
+          = randPrompts.Prompt
+        p
+          a(href='/')
+            &larr; back to today's prompt
+      if !user      
+        p
+          a(href='login') Login
+          |  or 
+          a(href='/signup') signup
+          |  now to spin for another challenge, track your progress, and win badges.
+      else
+        p
+          a.btn.btn-primary.btn-lg 
+            i.fa.fa-check-square-o(aria-hidden='true')
+            |  I completed this challenge!
+          a(href='/random').btn.btn-primary.btn-lg
+            i.fa.fa-refresh(aria-hidden='true')
+            |  Show me another challenge
+          a.btn.btn-primary.btn-lg
+            i.fa.fa-pencil(aria-hidden='true')
+            |  I wrote something else instead today
+        p
+          a.btn.btn-warning.btn-lg 
+            i.fa.fa-check-square-o(aria-hidden='true')
+            |  Challenge completed!
+          a(href='/random').btn.btn-primary.btn-lg
+            i.fa.fa-refresh(aria-hidden='true')
+            |  Show me another challenge
+          a.btn.btn-primary.btn-lg
+            i.fa.fa-pencil(aria-hidden='true')
+            |  I wrote something else as well today

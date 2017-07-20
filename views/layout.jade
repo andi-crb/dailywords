@@ -23,16 +23,22 @@ html
           li
             a(href='/faqs') FAQs
         ul.nav.navbar-nav.navbar-right
-          li
-            a(href='#') login
-          li
-            a(href='#') signup
-          li
-            a(href='#')
-              i.fa.fa-cog.fa-2x(aria-hidden='true')
-          li
-            a(href='#')
-              i.fa.fa-user-circle.fa-2x(aria-hidden='true')
+          if !user
+            li
+              a(href='/login') login
+            li
+              a(href='/signup') signup
+          if user
+            li
+              a(href='/signup')
+                i.fa.fa-line-chart.fa-2x(aria-hidden='true')
+                span.badge 3
+            li
+              a(href='#')
+                i.fa.fa-cog.fa-2x(aria-hidden='true')
+            li
+              a(href='#')
+                i.fa.fa-user-circle.fa-2x(aria-hidden='true')
   body
   block content
   

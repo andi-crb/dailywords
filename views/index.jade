@@ -4,12 +4,16 @@ block content
   .row
   .col-md-12
     .jumbotron
-      h1 Today's challenge is: 
-      - each prompt, i in prompts
+      h1 Today's challenge is:
+      if prompt
+        - each prompt, i in prompts
+          p
+            = prompt.Prompt
+      if !prompt
         p
-          = prompt.Prompt
+          | Sorry, no prompt today. Go write some words and check back soon.
       p
-        a(href='#') Sign up now to spin for another challenge, track your progress, and win badges.
+        a(href='/signup') Sign up now to spin for another challenge, track your progress, and win badges.
       p
         a.btn.btn-primary.btn-lg 
           i.fa.fa-check-square-o(aria-hidden='true')
